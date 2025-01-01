@@ -1,0 +1,294 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.controls {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.control-group {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.button-group, .save-load-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+label {
+    min-width: 120px;
+    color: #444;
+}
+
+select, input[type="range"] {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    flex: 1;
+    max-width: 200px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#animate {
+    background-color: #2196F3;
+}
+
+#animate:hover {
+    background-color: #1976D2;
+}
+
+#showSolution {
+    background-color: #FF9800;
+}
+
+#showSolution:hover {
+    background-color: #F57C00;
+}
+
+#saveMaze {
+    background-color: #9C27B0;
+}
+
+#saveMaze:hover {
+    background-color: #7B1FA2;
+}
+
+#loadMazeBtn {
+    background-color: #607D8B;
+}
+
+#loadMazeBtn:hover {
+    background-color: #455A64;
+}
+
+.maze-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+canvas {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+/* Animation for solution path */
+@keyframes solutionPath {
+    from {
+        stroke-dashoffset: 1000;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Theme preview swatches */
+#theme option {
+    padding-left: 25px;
+}
+
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transform: translateX(120%);
+    transition: transform 0.3s ease-out;
+    z-index: 1000;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification.error {
+    background-color: #f44336;
+}
+
+.notification-icon {
+    font-size: 20px;
+}
+
+.notification-message {
+    font-size: 16px;
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.loading-overlay.show {
+    display: flex;
+}
+
+.loading-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.loading-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 10px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.dialog-overlay.show {
+    display: flex;
+}
+
+.dialog-content {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 400px;
+}
+
+.dialog-content h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.dialog-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.dialog-buttons button {
+    padding: 12px 20px;
+    font-size: 16px;
+    width: 100%;
+}
+
+#downloadPDF {
+    background-color: #2196F3;
+}
+
+#downloadPDF:hover {
+    background-color: #1976D2;
+}
+
+#downloadJPG {
+    background-color: #4CAF50;
+}
+
+#downloadJPG:hover {
+    background-color: #45a049;
+}
+
+#printMaze {
+    background-color: #FF9800;
+}
+
+#printMaze:hover {
+    background-color: #F57C00;
+}
+
+#closeDialog {
+    background-color: #9E9E9E;
+}
+
+#closeDialog:hover {
+    background-color: #757575;
+}
+
+.button-group-label {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #666;
+    font-weight: bold;
+    text-align: left;
+    width: 100%;
+}
+
+/* Style the solution buttons differently */
+#downloadPDFSolved, #downloadJPGSolved, #printMazeSolved {
+    background-color: #9C27B0;
+}
+
+#downloadPDFSolved:hover, #downloadJPGSolved:hover, #printMazeSolved:hover {
+    background-color: #7B1FA2;
+} 

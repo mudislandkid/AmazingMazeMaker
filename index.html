@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazing Maze Maker</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        window.jsPDF = window.jspdf.jsPDF;
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Amazing Maze Maker</h1>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label for="difficulty">Difficulty (1-5):</label>
+                <input type="range" id="difficulty" min="1" max="5" value="3">
+                <span id="difficultyValue">3</span>
+            </div>
+
+            <div class="control-group">
+                <label for="shape">Maze Shape:</label>
+                <select id="shape">
+                    <option value="square">Square</option>
+                    <option value="circle">Circle</option>
+                    <option value="heart">Heart</option>
+                    <option value="star">Star</option>
+                    <option value="hexagon">Hexagon</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="style">Pattern Style:</label>
+                <select id="style">
+                    <option value="classic">Classic Grid</option>
+                    <option value="spiral">Spiral (Circle Only)</option>
+                    <option value="zigzag">Zigzag Pattern</option>
+                    <option value="honeycomb">Honeycomb</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="theme">Color Theme:</label>
+                <select id="theme">
+                    <option value="classic">Classic (Black & White)</option>
+                    <option value="forest">Forest (Green)</option>
+                    <option value="ocean">Ocean (Blue)</option>
+                    <option value="sunset">Sunset (Orange/Purple)</option>
+                    <option value="neon">Neon</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="size">Size:</label>
+                <select id="size">
+                    <option value="small">Small</option>
+                    <option value="medium">Medium</option>
+                    <option value="large">Large</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="entrances">Entry/Exit Points:</label>
+                <select id="entrances">
+                    <option value="1">Single (Default)</option>
+                    <option value="2">Two Points</option>
+                    <option value="4">Four Points</option>
+                </select>
+            </div>
+
+            <div class="button-group">
+                <button id="generate">Generate Maze</button>
+                <button id="showSolution">Show Solution</button>
+            </div>
+        </div>
+
+        <div class="maze-container">
+            <canvas id="mazeCanvas"></canvas>
+        </div>
+    </div>
+    <div id="notification" class="notification">
+        <span class="notification-icon">✓</span>
+        <span class="notification-message"></span>
+    </div>
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div id="loadingMessage">Generating maze...</div>
+        </div>
+    </div>
+    <div id="completionDialog" class="dialog-overlay">
+        <div class="dialog-content">
+            <h2>Maze Generated Successfully!</h2>
+            <p>What would you like to do with your maze?</p>
+            <div class="dialog-buttons">
+                <div class="button-group-label">Download/Print Maze:</div>
+                <button id="downloadPDF">Download as PDF</button>
+                <button id="downloadJPG">Download as JPG</button>
+                <button id="printMaze">Print Maze</button>
+                <div class="button-group-label">Download/Print with Solution:</div>
+                <button id="downloadPDFSolved">Download Solved Maze as PDF</button>
+                <button id="downloadJPGSolved">Download Solved Maze as JPG</button>
+                <button id="printMazeSolved">Print Solved Maze</button>
+                <button id="closeDialog">Continue</button>
+            </div>
+        </div>
+    </div>
+    <script src="maze.js"></script>
+</body>
+</html> 
