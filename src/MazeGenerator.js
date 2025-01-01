@@ -1,4 +1,4 @@
-import { SHAPES } from './utils/shapes.js';
+import { getStyle } from './utils/styles.js';
 
 export default class MazeGenerator {
     constructor(width, height) {
@@ -15,22 +15,9 @@ export default class MazeGenerator {
         this.validationPath = null;
     }
 
-    initializeGrid(shape = 'square') {
-        this.shape = shape;
-        this.grid = [];
-        const shapePath = SHAPES[shape].getPath(this.width, this.height);
-        
-        for (let y = 0; y < this.height; y++) {
-            this.grid[y] = [];
-            for (let x = 0; x < this.width; x++) {
-                const isInShape = this.isPointInShape(x, y, shapePath.points);
-                this.grid[y][x] = {
-                    visited: !isInShape,
-                    walls: { top: true, right: true, bottom: true, left: true },
-                    inShape: isInShape
-                };
-            }
-        }
+    initializeGrid(shape = 'square', styleName = 'classic') {
+        const style = getStyle(styleName);
+        style.initializeGrid(this, shape);
     }
 
     isPointInShape(x, y, points) {

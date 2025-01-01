@@ -39,6 +39,16 @@ export function initializeControls(mazeRenderer) {
     // Dialog controls
     document.getElementById('closeDialog').addEventListener('click', hideCompletionDialog);
     document.getElementById('completionDialog').addEventListener('click', handleDialogClick);
+
+    // Add style change handler
+    styleSelect.addEventListener('change', (e) => {
+        if (e.target.value === 'circular') {
+            shapeSelect.value = 'circle';
+            shapeSelect.disabled = true;
+        } else {
+            shapeSelect.disabled = false;
+        }
+    });
 }
 
 async function generateNewMaze() {
@@ -65,7 +75,9 @@ async function generateNewMaze() {
             currentMaze.entrances = parseInt(document.getElementById('entrances').value);
             currentMaze.animationSpeed = 100;
             
-            currentMaze.initializeGrid(document.getElementById('shape').value);
+            const style = document.getElementById('style').value;
+            const shape = document.getElementById('shape').value;
+            currentMaze.initializeGrid(shape, style);
 
             currentMaze.animationCallback = (grid, cell) => {
                 renderer.render(currentMaze, document.getElementById('style').value, false);

@@ -1,4 +1,4 @@
-import { THEMES } from './utils/themes.js';
+import { getStyle } from './utils/styles.js';
 
 export default class MazeRenderer {
     constructor(canvas) {
@@ -11,7 +11,7 @@ export default class MazeRenderer {
         this.currentTheme = THEMES[themeName];
     }
 
-    async render(maze, style = 'classic', showSolution = false) {
+    async render(maze, styleName = 'classic', showSolution = false) {
         const cellSize = Math.min(
             (this.canvas.width - 40) / maze.width,
             (this.canvas.height - 40) / maze.height
@@ -28,13 +28,37 @@ export default class MazeRenderer {
         this.ctx.lineWidth = 2;
 
         // Draw maze cells
-        for (let y = 0; y < maze.height; y++) {
-            for (let x = 0; x < maze.width; x++) {
-                const cell = maze.grid[y][x];
-                if (cell.inShape) {
-                    const cellX = offsetX + (x * cellSize);
-                    const cellY = offsetY + (y * cellSize);
-                    this.drawCell(cell, cellX, cellY, cellSize);
+        const style = getStyle(styleName);
+        if (styleName === 'circular') {
+            const centerX = this.canvas.width / 2;
+            const centerY = this.canvas.height / 2;
+            
+            for (let y = 0; y < maze.height; y++) {
+                const cellsInRing = Math.floor(maze.width + (y * 4));
+                
+                for (let x = 0; x < cellsInRing; x++) {
+                    const cell = maze.grid[y][x];
+                    if (cell && cell.inShape) {
+                        style.renderCell(this.ctx, cell, x, y, cellSize, {
+                            row: y,
+                            col: x,
+                            totalRows: maze.height,
+                            totalCols: cellsInRing,
+                            canvasWidth: this.canvas.width,
+                            canvasHeight: this.canvas.height
+                        });
+                    }
+                }
+            }
+        } else {
+            for (let y = 0; y < maze.height; y++) {
+                for (let x = 0; x < maze.width; x++) {
+                    const cell = maze.grid[y][x];
+                    if (cell.inShape) {
+                        const cellX = offsetX + (x * cellSize);
+                        const cellY = offsetY + (y * cellSize);
+                        style.renderCell(this.ctx, cell, cellX, cellY, cellSize);
+                    }
                 }
             }
         }
@@ -79,29 +103,6 @@ export default class MazeRenderer {
             }
             this.ctx.stroke();
         }
-    }
-
-    drawCell(cell, x, y, cellSize) {
-        if (!cell.inShape) return;
-
-        this.ctx.beginPath();
-        if (cell.walls.top) {
-            this.ctx.moveTo(x, y);
-            this.ctx.lineTo(x + cellSize, y);
-        }
-        if (cell.walls.right) {
-            this.ctx.moveTo(x + cellSize, y);
-            this.ctx.lineTo(x + cellSize, y + cellSize);
-        }
-        if (cell.walls.bottom) {
-            this.ctx.moveTo(x, y + cellSize);
-            this.ctx.lineTo(x + cellSize, y + cellSize);
-        }
-        if (cell.walls.left) {
-            this.ctx.moveTo(x, y);
-            this.ctx.lineTo(x, y + cellSize);
-        }
-        this.ctx.stroke();
     }
 
     async drawSolution(maze, cellSize, offsetX, offsetY) {
